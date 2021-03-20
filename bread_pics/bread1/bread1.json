@@ -1,11 +1,22 @@
 {
-    "bread1" : [
+    "folder_name" : "bread1",
+    "images" : [
         "1.jpg",
         "2.jpg",
         "3.jpg", 
         "4.jpg",
         "5.jpg",
         "6.jpg",
-		"burnt.jpg"
-    ]
+		"burnt.jpg"],
+    "description" :  "You unwrap a little loaf small enough to fit in ANY hole",
+	"out" : "Not that much dough. You poor or something buddy?",
+	"value" : 3,
+    "state_description" : [ "c'mon now, you've just started", 
+                            "keep checking, it'll bake faster",
+                            "are you just sitting in front of the oven?"
+							"are you ready? the bread is almost ready!"
+							"a solid time to check the bread"
+							"that's a good looking loaf!"
+                            "how could you do this? You burnt the fucking bread you DONKEY!"]
+
 }
