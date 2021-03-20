@@ -16,8 +16,11 @@ client.on("message", async message => {
             let bread = baker.get_bread()
             switch (val[1]){
                 case "check": //checks on the bread
-                    let status = bread.get_status()
-                    message.channel.send(status)
+                    message.channel.send(bread.get_status(),{
+                        files: [
+                            bread.get_picture()
+                        ]
+                    });
                 case "out": //takes bread out of the oven
                     let out_message = bread.get_out_message()
                     message.channel.send(out_message)
