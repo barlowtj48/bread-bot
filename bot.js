@@ -23,6 +23,7 @@ client.on("message", async message => {
                     });
                 case "out": //takes bread out of the oven
                     let out_message = bread.get_out_message()
+                    bread.sell()
                     message.channel.send(out_message)
                 case "bucks": //checks how much money you have
                     let balance = baker.get_balance()
