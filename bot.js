@@ -7,7 +7,6 @@ const TOKEN = process.env.DISCORD_BOT_TOKEN;
 client.on("message", async message => {
     if(message.author.bot) { return; }
     if(!message.guild) { return; }
-
     
 });
 
