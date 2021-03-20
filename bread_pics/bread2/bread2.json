@@ -1,11 +1,22 @@
 {
-    "bread2" : [
+    "folder_name" : "bread2",
+    "images" : [
         "1.jpg",
         "2.jpg",
         "3.jpg", 
         "4.jpg",
         "5.jpg",
         "6.jpg",
-		"burnt.jpg"
-    ]
+		"burnt.jpg"],
+    "description" :  "You got some dough, a sizeable amount of dough, almost enough to make you feel hungry",
+	"takeout" : "You unwrap the dough like a nice present, then slap it around a little like a bitch",
+	"value" : 8,
+    "state_description" : [ "nice cock, bread looks a lil doughy tho", 
+                            "rate this bread 1-10, on a baking scale, id rate it a 2 so far. keep it going",
+                            "this bread makes me feel some way :regional_indicator_f::regional_indicator_r: :regional_indicator_f::regional_indicator_r:"
+							"i'd nut on this bread tbh 8==D:sweat_drops: "
+							"this bread is a lil baddie :point_right::point_left::pleading_face:"
+							"LOOK AT THE SIZE OF THAT BREAD HOLY SHIT"
+                            "nice one dumbass, you burnt your bread. are you new to this or something? are you the creator of famine? please, never touch baking again. you cunt."]
+
 }

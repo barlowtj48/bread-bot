@@ -4,13 +4,17 @@ import { get_loaf } from "./utils.js";
 
 export class Bread {
     constructor() { // get number of types of bread and pick from the selection
-        let loaf = get_loaf();
-        this.intro_description = loaf.description;
-        this.loaf_name = loaf.name;
-        this.img_files = loaf.images;
-        this.state_descriptions = loaf.state_description;
-        this.value = loaf.value;
+        this.loaf = get_loaf(); //refers directly to the json files that hold all of the information
+        this.state = 0;
     }
 
+    get_status(){
+        return this.loaf.state_description[this.state];
+    }
+
+    get_picture(){
+        let dir = process.cwd();
+        return dir + "/bread_pics/" + this.loaf.folder_name + "/" + this.loaf.images[this.state];
+    }
 }
 
