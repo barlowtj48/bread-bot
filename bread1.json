@@ -1,0 +1,28 @@
+{
+    "folder_name" : "bread1",
+    "images" : [
+        "1.jpg",
+        "2.jpg",
+        "3.jpg", 
+        "4.jpg",
+        "5.jpg",
+        "6.jpg",
+		"burnt.jpg"],
+    "description" :  "You unwrap a little loaf small enough to fit in ANY hole",
+	"takeout" : ["congrats. you have warm dough",
+                "really man? You literally left it in there for like 5 seconds.",
+                "do you last this long with your girlfriend?",
+                "enjoy your chewy disgusting undercooked bread you sick fuck.",
+                "not bad for a bread novice",
+                "goddamn I would fuck that bread. Thats some good mother fuckin lookin bread",
+                "you really burned that bread? I bet your parents are cousins"],
+	"value" : 3,
+    "state_description" : [ "c'mon now, you've just started",
+                            "keep checking, it'll bake faster",
+                            "are you just sitting in front of the oven?",
+							"are you ready? the bread is almost ready!",
+							"a solid time to check the bread",
+							"that's a good looking loaf!",
+                            "how could you do this? You burnt the fucking bread you DONKEY!"]
+
+}
