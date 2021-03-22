@@ -13,7 +13,7 @@ client.on("message", async message => {
 
     if(val[0] == "🍞" && val.length > 1){
         if(baker.is_baking()){
-            let bread = baker.get_bread();
+            let bread = baker.my_bread;
             switch (val[1]){
                 case "check": //checks on the bread
                     message.channel.send(bread.get_status(),{
