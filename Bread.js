@@ -16,7 +16,15 @@ export class Bread {
     }
 
     get_status(){
-        return this.loaf.state_description[this.state];
+        let now = new Date().getTime();
+        let difference = now - this.start_time;
+        if(this.state > this.loaf.images.length-1){
+            return this.loaf.state_description[this.loaf.images.length-1];
+        }
+        else{
+            this.state += Math.floor(difference/120000); //change state every 2 minutes until end of states
+            return this.loaf.state_description[this.state];
+        }
     }
 
     get_picture(){

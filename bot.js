@@ -28,8 +28,7 @@ client.on("message", async message => {
                     message.channel.send(out_message);
                 break;
                 case "bucks": //checks how much money you have
-                    let balance = baker.get_balance();
-                    message.channel.send(balance);
+                    message.channel.send(baker.balance);
                 break;
             }
         }
@@ -43,11 +42,9 @@ client.on("message", async message => {
                         ]
                     });
                 break;
+            }
         }
-    }
-
-
-    
+    }   
 });
 
 client.on("ready", () => {
