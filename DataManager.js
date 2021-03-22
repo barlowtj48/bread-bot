@@ -24,7 +24,7 @@ export class DataManager {
     }
 
     get_bakery(guild_id){
-        return this.bakeries.find(bakery => bakery.id === guild_id)
+        return this.bakeries.find(bakery => bakery.id === guild_id);
     }
 
     get_role(guild_id, role_name) {
