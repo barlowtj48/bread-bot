@@ -5,25 +5,29 @@ import { SaveManager } from "./SaveManager.js";
 
 export class DataManager {
     constructor(){
-        this.bakeries = [];
+        this.sm = new SaveManager();
+        this.bakeries = this.sm.read_data();
     }
 
     add_bakery(guild_id, roles) {
         let new_guild = new Bakery(guild_id, roles);
         this.bakeries.push(new_guild);
-        SaveManager.add_guild(new_guild, roles);
+        this.sm.add_guild(new_guild, roles);
         return new_guild;
     }
 
     add_baker(guild_id, member_id) {
         let guild = this.get_bakery(guild_id);
         let baker = new Baker(member_id);
-        SaveManager.add_member(guild_id, baker);
+        this.sm.add_member(guild_id, baker);
         guild.push(baker);
         return baker;
     }
 
     get_bakery(guild_id){
+        if(!this.bakeries){
+            return undefined;
+        }
         return this.bakeries.find(bakery => bakery.id === guild_id);
     }
 

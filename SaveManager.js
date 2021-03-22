@@ -5,13 +5,13 @@ export class SaveManager {
         this.guilds = []
     }
 
-    add_guild(guild_id) {
+    add_guild(guild_id, roles) {
         this.guilds.push({
             "id" : guild_id, 
             "roles" : roles,
             "bakers" : []
         });
-        update_json();
+        this.write_data();
     }
 
     add_member(guild_id, baker) {
@@ -24,15 +24,14 @@ export class SaveManager {
             "total_earned" : baker.total_earned
         }
         guild.push(member);
-        update_json();
+        this.write_data();
     }
 
     read_data() {
         readFile("./data.json", (err, data) => {
-          let servers = [];
           console.log("Reading data...");
           if (err) {
-            if (fs.existsSync("./data.json")) {
+            if (existsSync("./data.json")) {
               console.log("Data unable to be read.");
             } else{
               writeFile("data.json", "[]", function (err) {
@@ -42,10 +41,10 @@ export class SaveManager {
             }
             
           } else if (JSON.parse(data) == undefined) {
-            guilds = [];
+            this.guilds = [];
             console.log(JSON.stringify(guilds, null, 2));
           } else {
-            guilds = JSON.parse(data);
+            this.guilds = JSON.parse(data);
           }
         });
       }

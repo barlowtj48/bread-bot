@@ -6,7 +6,8 @@ import { DataManager } from "./DataManager.js"
 const client = new Client();
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
 
-var baker = undefined
+var dm = new DataManager();
+
 
 client.on("message", async message => {
     if(message.author.bot) { return; }
@@ -14,11 +15,21 @@ client.on("message", async message => {
 
     if(message.content.toLowerCase().startsWith("🍞")){
         let val = message.content.toLowerCase().split(" ");
-
-        if(!baker){
-            baker = new Baker(message.author.id);
+        
+        let bakery = dm.get_bakery(message.guild.id);
+        if(!bakery) {
+            await make_roles(message.guild).then(roles => {
+                bakery = dm.add_bakery(message.guild.id, roles);
+            });
+            
         }
-        if(true){
+
+        let baker = bakery.get_baker(message.guild.id, message.author.id);
+        if(!baker) {
+            baker = dm.add_baker(message.guild.id, message.author.id);
+        }
+
+        if(baker.is_baking()){
             switch (val[1]){
                 case "check": //checks on the bread
                     message.channel.send(baker.my_bread.get_status(),{
@@ -47,6 +58,20 @@ client.on("message", async message => {
         }
     }   
 });
+
+async function make_roles(guild) {
+    let roles = [];
+    let tiers = ["breasant", "doughy-pauper", "yeasty-baker", "enlisted-baker", "bread-lord", "bread-pharoah"];
+    tiers.forEach(async tier => {
+        await guild.roles.create({
+            data : {
+                name : tier, 
+                hoist : true
+            }
+        }).then(role => roles.push(role));
+    });
+    return roles;
+}
 
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
