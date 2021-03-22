@@ -13,7 +13,7 @@ client.on("message", async message => {
 
     if(val[0] == "🍞" && val.length > 1){
         if(baker.is_baking()){
-            let bread = baker.get_bread();
+            let bread = baker.my_bread;
             switch (val[1]){
                 case "check": //checks on the bread
                     message.channel.send(bread.get_status(),{
@@ -28,8 +28,7 @@ client.on("message", async message => {
                     message.channel.send(out_message);
                 break;
                 case "bucks": //checks how much money you have
-                    let balance = baker.get_balance();
-                    message.channel.send(balance);
+                    message.channel.send(baker.balance);
                 break;
             }
         }
@@ -43,11 +42,9 @@ client.on("message", async message => {
                         ]
                     });
                 break;
+            }
         }
-    }
-
-
-    
+    }   
 });
 
 client.on("ready", () => {
