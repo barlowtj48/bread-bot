@@ -10,8 +10,8 @@ export class Bread {
 
         let len = this.loaf.images.length;
         this.value = new Array(len).fill(0)
-        this.value[len-1] = -value;
-        this.value[len-2] = value;
+        this.value[len-1] = -this.loaf.value;
+        this.value[len-2] = this.loaf.value;
         this.value[len-3] = 1;
     }
 
@@ -27,13 +27,17 @@ export class Bread {
         }
     }
 
+    get_description(){
+        return this.loaf.description;
+    }
+
     get_picture(){
         let dir = process.cwd();
-        return dir + "/bread_pics/" + this.loaf.folder_name + this.loaf.images[this.state];
+        return dir + "/bread_pics/" + this.loaf.folder_name + "/" + this.loaf.images[this.state];
     }
 
     get_out_message(){
-        return this.loaf.state_description[this.state];
+        return this.loaf.takeout[this.state];
     }
 
     sell(){

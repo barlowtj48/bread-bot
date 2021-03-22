@@ -1,7 +1,7 @@
-import { Bread } from "Bread.js";
+import { Bread } from "./Bread.js";
 
 
-class Baker { 
+export class Baker { 
     constructor(id){
         this.id = id;
         this.balance = 0;
