@@ -1,46 +1,36 @@
-//revise structure::
-/*
-Guilds:
-    Guild:
-        Roles:
-            Role1
-            Role2
-        Bakers:
-            Baker:
-                ID
-                Bread:
-                    etc
-                Money
-                Burned
-                Succeeded
-                
+import { Baker } from "./Baker.js";
+import { Bakery } from "./Bakery.js";
+import { SaveManager } from "./SaveManager.js";
 
-*/
 
-class DataManager {
+export class DataManager {
     constructor(){
-        this.guilds = []
-    }
-    add_guild(guild_id) {
-        this.guilds.push(guild_id);
-    }
-    add_member(guild_id, member_id) {
-        let guild = this.guilds.find(guild => guild.id == guild_id);
-        guild.push(new_member(member_id));)
-    }
-    new_member(member_id) {
-        return {member_id : {
-            "money" : 0,
-            "num_burned" : 0,
-            "bread" : {}, 
-
-        }}
+        this.bakeries = [];
     }
 
-    get_baker(guild_id, member_id) {
-        let baker = this.guilds.bakers.find(baker => baker.id == member_id);
-        if(baker == undefined) {
-
-        }
+    add_bakery(guild_id, roles) {
+        let new_guild = new Bakery(guild_id, roles);
+        this.bakeries.push(new_guild);
+        SaveManager.add_guild(new_guild, roles);
+        return new_guild;
     }
+
+    add_baker(guild_id, member_id) {
+        let guild = this.get_bakery(guild_id);
+        let baker = new Baker(member_id);
+        SaveManager.add_member(guild_id, baker);
+        guild.push(baker);
+        return baker;
+    }
+
+    get_bakery(guild_id){
+        return this.bakeries.find(bakery => bakery.id === guild_id)
+    }
+
+    get_role(guild_id, role_name) {
+        let bakery = this.get_bakery();
+        return bakery.get_role(role_name);
+    }
+
+
 }
