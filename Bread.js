@@ -22,7 +22,7 @@ export class Bread {
             return this.loaf.state_description[this.loaf.images.length-1];
         }
         else{
-            this.state += Math.floor(difference/120000); //change state every 2 minutes until end of states
+            this.state += Math.floor(difference/60000); //change state every minute until end of states
             return this.loaf.state_description[this.state];
         }
     }
