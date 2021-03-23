@@ -1,4 +1,4 @@
-import { readFile, writeFile, existsSync } from "fs";
+import { readFileSync, writeFileSync, existsSync } from "fs";
 
 export class SaveManager {
     constructor(){
@@ -6,66 +6,63 @@ export class SaveManager {
     }
 
     add_guild(guild_id, roles) {
+      let basic_roles = {}
+      roles.forEach(role => {
+        basic_roles[role.name] = role.id;
+      });
         this.guilds.push({
             "id" : guild_id, 
-            "roles" : roles,
+            "roles" : basic_roles,
             "bakers" : []
         });
         this.write_data();
     }
 
     add_member(guild_id, baker) {
-        let guild = this.guilds.find(guild => guild.id === guild_id);
-        member = {
-            "id" : baker.id,
-            "money" : baker.balance, 
-            "burned" : baker.burned,
-            "successful" : baker.successful,
-            "total_earned" : baker.total_earned
-        }
-        guild.push(member);
-        this.write_data();
+      let guild = this.guilds.find(guild => guild.id === guild_id);
+      let member = {
+          "id" : baker.id,
+          "balance" : baker.balance, 
+          "burned" : baker.burned,
+          "successful" : baker.successful,
+          "total_earned" : baker.total_earned
+      }
+      guild.bakers.push(member);
+      this.write_data();
     }
 
     read_data() {
-        readFile("./data.json", (err, data) => {
-          console.log("Reading data...");
-          if (err) {
-            if (existsSync("./data.json")) {
-              console.log("Data unable to be read.");
-            } else{
-              writeFile("data.json", "[]", function (err) {
-                if (err) return console.log(err);
-                console.log('data.json was created.');
-              });
-            }
-            
-          } else if (JSON.parse(data) == undefined) {
-            this.guilds = [];
-            console.log(JSON.stringify(guilds, null, 2));
-          } else {
-            this.guilds = JSON.parse(data);
-          }
-        });
+      if(!existsSync("./data.json")){
+        writeFileSync("./data.json", "[]");
+      }
+      let data = readFileSync("./data.json");
+      if(!data){
+        console.log("Error reading data.");
+      } else if(data.length == 0) {
+        writeFileSync("./data.json", "[]");
+      }
+      data = JSON.parse(data);
+      if(data == undefined){
+        this.guilds = [];
+        return [];
+      }
+      this.guilds = data;
+      return data;
       }
 
       write_data() {
-        writeFile("data.json", JSON.stringify(guilds, null, 2), err => {
-          if (err) {
-            console.log("Data was unable to be written.");
-          } else {
-            let d = new Date();
-            console.log(
-              d.getDate() +
-                ":" +
-                d.getHours() +
-                ":" +
-                d.getMinutes() +
-                ":" +
-                d.getSeconds() +
-                ";   Data updated"
-            );
-          }
-        });
+        let a = writeFileSync("./data.json", JSON.stringify(this.guilds, null, 2));
+        console.log(a);
+        let d = new Date();
+        console.log(
+          d.getDate() +
+            ":" +
+            d.getHours() +
+            ":" +
+            d.getMinutes() +
+            ":" +
+            d.getSeconds() +
+            ";   Data updated"
+        );
       }
 }

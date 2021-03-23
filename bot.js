@@ -1,4 +1,4 @@
-import { Client } from "discord.js";
+import { Client, Message } from "discord.js";
 import { Baker } from "./Baker.js";
 import { Bread } from "./Bread.js";
 import { DataManager } from "./DataManager.js"
@@ -13,63 +13,106 @@ client.on("message", async message => {
     if(message.author.bot) { return; }
     if(!message.guild) { return; }
 
+    //DEBUG ONLY*****************************************************************************
+    if(message.content === "killallroles"){
+        let kill_these = ["breasant", "doughy-pauper", "yeasty-baker", "enlisted-baker", "bread-lord", "bread-pharoah"];
+        message.guild.roles.cache.forEach(async role => {
+        if(kill_these.find(killed => killed == role.name)) {
+            await role.delete();
+            console.log(`${role.name} has been deleted.`);
+        }
+    });
+    return;
+    }
+    //END DEBUG******************************************************************************
+
     if(message.content.toLowerCase().startsWith("🍞")){
-        let val = message.content.toLowerCase().split(" ");
-        
+        //Check existence of server in the persistent data
         let bakery = dm.get_bakery(message.guild.id);
         if(!bakery) {
             await make_roles(message.guild).then(roles => {
                 bakery = dm.add_bakery(message.guild.id, roles);
             });
-            
         }
 
-        let baker = bakery.get_baker(message.guild.id, message.author.id);
+        //Check existence of user in the guild persistent data
+        let baker = bakery.get_baker(message.author.id);
         if(!baker) {
             baker = dm.add_baker(message.guild.id, message.author.id);
         }
+        
+        //Need to check if bread is in progress already
+        let val = message.content.toLowerCase().split(" ");
+        if (val.length <= 1) { return; }
+        let out_message =  `${message.author.toString()}\n`;
+        let files = undefined;
+        switch(val[1]) {
+            case "check": //get status of current bread
+                    if(baker.is_baking()){
+                        out_message += baker.my_bread.get_status();
+                        files = baker.my_bread.get_picture();
+                    } else { 
+                        out_message += "You need to start baking before you check the status of your bread.";
+                    }
+                break;
 
-        if(baker.is_baking()){
-            switch (val[1]){
-                case "check": //checks on the bread
-                    message.channel.send(baker.my_bread.get_status(),{
-                        files: [
-                            baker.my_bread.get_picture()
-                        ]
-                    });
-                break;
-                case "bake": //start making bread
+
+            case "bake": //start making bread
+                if(!baker.is_baking()){
                     baker.make_bread();
-                    message.channel.send(baker.my_bread.get_description(),{
-                        files: [
-                            baker.my_bread.get_picture()
-                        ]
-                    });
+                    out_message += baker.my_bread.get_description();
+                    files = baker.my_bread.get_picture();
+                } else {
+                    out_message += "You can't bake more than one at a time right now.";
+                }
+                
+                
                 break;
-                case "out": //takes bread out of the oven
-                    let out_message = baker.my_bread.get_out_message();
-                    baker.my_bread.sell();
-                    message.channel.send(out_message);
+
+
+            case "out": //takes bread out of the oven
+                if(baker.is_baking()){
+                    out_message +=  baker.my_bread.get_out_message();
+                    baker.take_out_bread();
+                    
+                } else {
+                    out_message +=  "You can't take bread out of the oven if there was never any there to begin with.";
+                }
                 break;
-                case "bucks": //checks how much money you have
-                    message.channel.send(baker.balance);
+
+
+            case "bucks": //checks how much money you have
+                out_message += `You currently have $${baker.balance}.`;
                 break;
-            }
+
+
+            default:
+                break;
         }
-    }   
+        if(files){
+            await message.channel.send(out_message,{
+                files: [
+                    files
+                ]
+            });
+        } else {
+            await message.channel.send(out_message);
+        }
+    }
 });
 
 async function make_roles(guild) {
     let roles = [];
     let tiers = ["breasant", "doughy-pauper", "yeasty-baker", "enlisted-baker", "bread-lord", "bread-pharoah"];
-    tiers.forEach(async tier => {
+    
+    for await (let tier of tiers) {
         await guild.roles.create({
             data : {
                 name : tier, 
                 hoist : true
             }
         }).then(role => roles.push(role));
-    });
+    }
     return roles;
 }
 

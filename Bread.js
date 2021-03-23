@@ -43,10 +43,5 @@ export class Bread {
     sell(){
         return this.value[this.state];
     }
-
-    
-
-
-
 }
 
