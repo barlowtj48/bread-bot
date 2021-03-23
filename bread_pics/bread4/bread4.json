@@ -1,0 +1,25 @@
+{
+    "folder_name" : "bread4",
+    "images" : [
+        "1.jpg",
+        "2.jpg",
+        "3.jpg", 
+        "4.jpg",
+        "5.jpg",
+        "6.jpg"],
+    "description" :  "This loaf is a nice one to share with your mom :wink:",
+    "takeout" : ["it's so tiny and you thought it was done? surely a mistake. whatever.",
+                 "gaining some traction but there are quite a few stages you rushed past",
+                 "this is not bread this is a burrito",
+                 "it might look the part but if you rip this in half it'll look like a cheese stick. and that's not good",
+                 "A nice scrumptious loaf! Impressive work.",
+                 "Looks good for a baked potato! But really garbage bread. You've failed"],
+    "value" : 5,
+    "state_description" : [ "you just started, wait longer", 
+                            "it's still rising dipshit",
+                            "patience is key, and it's still rising",
+                            "you've waited this long, and it looks great for it.",
+                            "yummy yummy crispy fresh bread 😛",
+                            "well it's not gonna get any worse in this virtual oven..."]
+
+}
